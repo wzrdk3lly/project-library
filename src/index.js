@@ -1,19 +1,26 @@
-
+// initialize library array to store all book objects in
 let library = [];
 
-// global query selectors
+// global & static query selectors
 let bookSection = document.getElementById("book-section")
 let btnAddBook = document.getElementById("add-book")
+let overlay = document.getElementById("overlay")
 
-
+//Event listener section
 
 // add event listener for deleting a card...if delete card run refresh function to assign cards with new id's
 // don't allow for edit capabilities -- remove pencil button
 // focus on adding and deleting cards, then you can focus on updating with read or not
 
-
 //Event listener for adding book to library
-btnAddBook.addEventListener("click", addBookToLibrary)
+// btnAddBook.addEventListener("click", addBookToLibrary) // paused for overlay functionality
+
+   btnAddBook.addEventListener("click",() => {
+        overlay.classList.remove("hidden")
+        overlay.classList.add("flex")
+   })
+
+
 
 function addBookToLibrary(){
     let toggle = true;
@@ -63,63 +70,63 @@ function generateID(){
 
 // add an updateID() function that gives that iterates over each book and gives the book a new id
 
-
 function displayBook(){
 
+    //Prevents duplication of displaying books
     bookSection.innerHTML = "";
 
     library.forEach(function (bookObject){
-
-        // Refactor to determineReadElements - include in addcard function
-        let btnTitle = "";
-        result = ""
-        if(bookObject.isRead){
-            btnTitle = "Not Read"
-            result = "Read"
-        }
-        else{
-            btnTitle = "Read"
-            result = "Not Read"
-        }
-
-        // Refactor to addcard function
-        let newBookCard = document.createElement("div");
-        newBookCard.classList.add("bg-white", "rounded-lg", "pl-2", "space-y-4")
-
-        let titleHeader = document.createElement("h5");
-        titleHeader.classList.add("text-xl", "font-bold");
-        titleHeader.innerText = "Title: " + bookObject.title;
-
-        let divAuthor = document.createElement("div");
-        divAuthor.innerText = "Author: " + bookObject.author
-
-        let divRead = document.createElement("div");
-        divRead.innerText = result
-
-        let divBtns = document.createElement("div");
-        divBtns.classList.add("space-x-2")
-
-        let btnDelete = document.createElement("button")
-        btnDelete.classList.add("focus:outline-none", "text-white", "bg-purple-700", "hover:bg-purple-800", 
-                                     "font-medium", "rounded-lg", "text-sm", "px-5", "py-2.5", 
-                                     "mb-2", "dark:bg-purple-600", "dark:hover:bg-purple-700");
-        btnDelete.innerText = "Delete"
-
-        let btnRead = document.createElement("button");
-        btnRead.classList.add("focus:outline-none", "text-white", "bg-purple-700", "hover:bg-purple-800",  
-                                "font-medium", "rounded-lg", "text-sm", "px-5", "py-2.5", "mb-2", 
-                                "dark:bg-purple-600", "dark:hover:bg-purple-700");
-        btnRead.innerText = btnTitle
-
-        divBtns.appendChild(btnDelete)
-        divBtns.appendChild(btnRead)
-        newBookCard.appendChild(titleHeader)
-        newBookCard.appendChild(divAuthor)
-        newBookCard.appendChild(divRead)
-        newBookCard.appendChild(divBtns)
-       
-        bookSection.appendChild(newBookCard)
-       
+        addCard(bookObject)
     });
 }
 
+
+function addCard(bookObject){
+
+    // Create card elements
+    let newBookCard = document.createElement("div");
+    let titleHeader = document.createElement("h5");
+    let divAuthor = document.createElement("div");
+    let divRead = document.createElement("div");
+    let divBtns = document.createElement("div");
+    let btnDelete = document.createElement("button")
+    let btnRead = document.createElement("button");
+
+    //Style card elements
+    newBookCard.classList.add("bg-white", "rounded-lg", "pl-2", "space-y-4");
+    titleHeader.classList.add("text-xl", "font-bold");
+    divBtns.classList.add("space-x-2");
+    btnDelete.classList.add("focus:outline-none", "text-white", "bg-purple-700", "hover:bg-purple-800", 
+                            "font-medium", "rounded-lg", "text-sm", "px-5", "py-2.5", 
+                            "mb-2", "dark:bg-purple-600", "dark:hover:bg-purple-700");
+    btnRead.classList.add("focus:outline-none", "text-white", "bg-purple-700", "hover:bg-purple-800",  
+                          "font-medium", "rounded-lg", "text-sm", "px-5", "py-2.5", "mb-2", 
+                          "dark:bg-purple-600", "dark:hover:bg-purple-700");
+    
+    //Manipulate card text
+    titleHeader.innerText = "Title: " + bookObject.title;
+    divAuthor.innerText = "Author: " + bookObject.author
+    divRead.innerText = readCategoryText(bookObject.isRead)
+    btnDelete.innerText = "Delete"
+    btnRead.innerText = ReadBtnText(bookObject.isRead)
+
+    //Create card
+    divBtns.appendChild(btnDelete)
+    divBtns.appendChild(btnRead)
+    newBookCard.appendChild(titleHeader)
+    newBookCard.appendChild(divAuthor)
+    newBookCard.appendChild(divRead)
+    newBookCard.appendChild(divBtns)
+   
+    //Add card to dashboard
+    bookSection.appendChild(newBookCard)
+}
+
+// The read/not read button needs to say the opposite for toggle functionality
+function ReadBtnText(isRead){
+     return isRead ? "Not Read" : "Read"
+}
+
+function readCategoryText(isRead){
+    return isRead ? "Read" : "Not Read"
+}
