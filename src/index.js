@@ -5,6 +5,7 @@ let library = [];
 let bookSection = document.getElementById("book-section")
 let btnAddBook = document.getElementById("add-book")
 let overlay = document.getElementById("overlay")
+let btnExitOverlay = document.getElementById("btn-exit")
 
 //Event listener section
 
@@ -18,45 +19,40 @@ let overlay = document.getElementById("overlay")
    btnAddBook.addEventListener("click",() => {
         overlay.classList.remove("hidden")
         overlay.classList.add("flex")
+   });
+
+   btnExitOverlay.addEventListener("click", () => {
+    removeOverlay();
+   });
+
+   window.addEventListener("load", () => {
+    document.getElementById("form").addEventListener("submit", (e)=> {
+        e.preventDefault();
+
+        let title = document.getElementById("book-title").value;
+        let author = document.getElementById("author").value;
+        let isRead = document.getElementById("read").checked;
+
+        addBookToLibrary(title,author,isRead)
+
+        //clear form after submission
+        document.getElementById("form").reset();
+        removeOverlay();
+    })
    })
 
 
 
-function addBookToLibrary(){
-    let toggle = true;
-    let id = generateID();
-    let title = prompt("What is the title of the book:  ");
-    let author = prompt("What is the author of the book: ");
-    let isRead = prompt("Have you read the the book: y/n");
+function addBookToLibrary(title,author, isRead){
 
-    while(toggle){
-        if(isRead === "y" || isRead === "Y"){
-            isRead = true;
-            toggle = false;
-        }
-        else if(isRead === "n" || isRead === "N"){
-            isRead = false
-            toggle = false;
-        }
-        else{
-            isRead = prompt("Have you read the the book: y/n")
-            continue
-        }
-    }
-   
+    let id = generateID();
+
     let newBook = new Book(id, title, author, isRead);
   
     library.push(newBook)
     displayBook();
     
     return newBook
-}
-
-function Book(id, title, author, isRead){
-    this.id = id
-    this.title = title
-    this.author = author 
-    this.isRead = isRead
 }
 
 function generateID(){
@@ -68,8 +64,14 @@ function generateID(){
     }
 }
 
-// add an updateID() function that gives that iterates over each book and gives the book a new id
+function Book(id, title, author, isRead){
+    this.id = id
+    this.title = title
+    this.author = author 
+    this.isRead = isRead
+}
 
+// add an updateID() function that gives that iterates over each book and gives the book a new id
 function displayBook(){
 
     //Prevents duplication of displaying books
@@ -78,6 +80,11 @@ function displayBook(){
     library.forEach(function (bookObject){
         addCard(bookObject)
     });
+}
+
+function removeOverlay(){
+    overlay.classList.add("hidden")
+    overlay.classList.remove("flex")
 }
 
 
