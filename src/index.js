@@ -68,12 +68,15 @@ function generateID(){
 
 // Deletes book from library depending on the bookID passed in
 function deleteBookFromLibrary(id){
+
     // Remove specified ID 
     if (library.length > 1) {
-       library.splice(id-1,1); 
+       let removedBook = library.splice(id-1,1); 
+       console.log("removing ", removedBook) //log to display the book being removed
     }
     else{
-        library.pop();
+        let removedBook = library.pop();
+        console.log("removing ", removedBook) //log to display the book being removed
     }
     
     //updateID need to create a refresh function to iterate through library and update with new id's
@@ -89,6 +92,27 @@ function Book(id, title, author, isRead){
     this.author = author 
     this.isRead = isRead
 }
+
+Book.prototype.toggleRead = function(){
+    let oldRead;
+    let newRead;
+
+    if (this.isRead === true){
+        oldRead = this.isRead;
+        this.isRead = false;
+        newRead = this.isRead;
+        console.log(`changing read field from ${oldRead} to ${newRead}`)
+    }
+    else{
+        oldRead = this.isRead;
+        this.isRead = true;
+        newRead = this.isRead;
+        console.log(`changing read field from ${oldRead} to ${newRead}`)
+    }
+        
+    
+}
+
 
 function displayBook(){
 
@@ -157,6 +181,19 @@ function addCard(bookObject){
     
         //call the delete book function
         deleteBookFromLibrary(id)
+
+    })
+
+    //Add event listener for the read/not read button on the card
+    btnRead.addEventListener("click", function() {
+        //changes read status of the particular book
+        bookObject.toggleRead();
+
+        //update read status of the book button in the ui
+        btnRead.innerText = ReadBtnText(bookObject.isRead)
+
+        // update read status of the isRead field in the ui
+        divRead.innerText = readCategoryText(bookObject.isRead)
 
     })
 }
