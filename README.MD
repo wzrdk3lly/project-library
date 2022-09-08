@@ -2,6 +2,8 @@
 I created a library app using tailwindcss, html, and vanilla js. 
 
 # App Preview
+[View App](https://wzrdk3lly.github.io/project-library/)
+
 ![Image](src/figures/Main%20App%20View.png)
 ![Image](src/figures/Modal%20Overlay.png)
 
@@ -13,6 +15,7 @@ I created a library app using tailwindcss, html, and vanilla js.
 
 # Lessons Learned
 - leverage objects and their prototypes
+- using ES6 classes
 - modify the DOM when new elements/cards are created
 - add an overlay with a form
 - pass form data to javascript variables
