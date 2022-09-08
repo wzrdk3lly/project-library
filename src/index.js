@@ -11,7 +11,6 @@ let btnDelete = document.getElementsByClassName("delete");
 
 // add event listener for deleting a card...if delete card run refresh function to assign cards with new id's
 
-btnCard = document.ge
 // don't allow for edit capabilities -- remove pencil button
 // focus on adding and deleting cards, then you can focus on updating with read or not
 
@@ -86,14 +85,15 @@ function deleteBookFromLibrary(id){
     
 }
 
-function Book(id, title, author, isRead){
-    this.id = id
-    this.title = title
-    this.author = author 
-    this.isRead = isRead
-}
+class Book{
+    constructor(id, title, author, isRead){
+        this.id = id
+        this.title = title 
+        this.author = author
+        this.isRead = isRead
+    }
 
-Book.prototype.toggleRead = function(){
+    toggleRead(){
     let oldRead;
     let newRead;
 
@@ -110,8 +110,35 @@ Book.prototype.toggleRead = function(){
         console.log(`changing read field from ${oldRead} to ${newRead}`)
     }
         
-    
+    }
 }
+
+// function Book(id, title, author, isRead){
+//     this.id = id
+//     this.title = title
+//     this.author = author 
+//     this.isRead = isRead
+// }
+
+// Book.prototype.toggleRead = function(){
+//     let oldRead;
+//     let newRead;
+
+//     if (this.isRead === true){
+//         oldRead = this.isRead;
+//         this.isRead = false;
+//         newRead = this.isRead;
+//         console.log(`changing read field from ${oldRead} to ${newRead}`)
+//     }
+//     else{
+//         oldRead = this.isRead;
+//         this.isRead = true;
+//         newRead = this.isRead;
+//         console.log(`changing read field from ${oldRead} to ${newRead}`)
+//     }
+        
+    
+// }
 
 
 function displayBook(){
