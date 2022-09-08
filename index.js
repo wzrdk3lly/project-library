@@ -103,31 +103,6 @@ class Book {
   }
 }
 
-// function Book(id, title, author, isRead){
-//     this.id = id
-//     this.title = title
-//     this.author = author
-//     this.isRead = isRead
-// }
-
-// Book.prototype.toggleRead = function(){
-//     let oldRead;
-//     let newRead;
-
-//     if (this.isRead === true){
-//         oldRead = this.isRead;
-//         this.isRead = false;
-//         newRead = this.isRead;
-//         console.log(`changing read field from ${oldRead} to ${newRead}`)
-//     }
-//     else{
-//         oldRead = this.isRead;
-//         this.isRead = true;
-//         newRead = this.isRead;
-//         console.log(`changing read field from ${oldRead} to ${newRead}`)
-//     }
-
-// }
 
 function displayBook() {
   //Prevents duplication of displaying books
